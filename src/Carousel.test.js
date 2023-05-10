@@ -52,3 +52,25 @@ it("works when you click on each arrow", function () {
     container.querySelector('img[alt="testing image 2"]')
   ).not.toBeInTheDocument();
 });
+
+it("left arrow not visible on first image", function () {
+  const { container } = render(
+    <Carousel photos={TEST_IMAGES} title="images for testing" />
+  );
+  expect(
+    container.querySelector(".bi-arrow-left-circle")
+  ).not.toBeInTheDocument();
+});
+
+it("right arrow not visible on last image", function () {
+  const { container } = render(
+    <Carousel photos={TEST_IMAGES} title="images for testing" />
+  );
+  // Click Right Arrow: move forward twice in the carousel
+  const rightArrow = container.querySelector(".bi-arrow-right-circle");
+  fireEvent.click(rightArrow);
+  fireEvent.click(rightArrow);
+  expect(
+    container.querySelector(".bi-arrow-right-circle")
+  ).not.toBeInTheDocument();
+});
