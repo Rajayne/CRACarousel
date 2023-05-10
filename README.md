@@ -1,68 +1,51 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Image Carousel
 
-## Available Scripts
+This exercise practices working with props, defaultProps, state, and simple click events in React.
 
-In the project directory, you can run:
+## Part 1: Smoke and Snapshot tests
 
-### `npm start`
+Write one smoke and one snapshot test each for the Card and Carousel components.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Part 2: Bug! Left arrow
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The left and right arrow do the same thing: move to the next image in the image array.
 
-### `npm test`
+1. Write a test that checks when on the second image, clicking the left arrow will move to the first image.
+2. Fix the app to pass the test.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Part 3: Bug! Exhausting the image array
 
-### `npm run build`
+If you’re on the last image and try to move forward, or if you’re on the first image and try to move backward, you get an error.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Hide the left arrow on the first image and the right arrow on the last.
+2. Write a test to check that the left arrow is missing when you’re on the first image, and that the right arrow is missing when you’re on the last image.
+3. Fix the app to pass the test.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+# Further Study: Coin Flip
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Create a coin flipping counter.
 
-### `npm run eject`
+The user should be able to click on a button to flip a coin. Every time the user clicks, the coin gets flipped again. The app should also keep track of how many times heads and tails have shown up.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+> Break your app up into at least two separate components!
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tests
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+At least test that there’s no coin image when the page loads, and that the text below the coin updates properly when the coin lands on heads or tails.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Testing random output can be tricky, since it’s unpredictable. Fortunately, Jest comes with functionality to mock any function you like, including Math.random. One way to handle it is with code like this:
 
-## Learn More
+```
+beforeEach(function() {
+jest
+.spyOn(Math, "random")
+.mockReturnValueOnce(0.25)
+.mockReturnValueOnce(0.75);
+});
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+afterEach(function() {
+Math.random.mockRestore();
+});
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+With this code, Jest will ensure that the first call to Math.random() returns 0.25, and the second call will return 0.75. In this way you can make random output completely predictable within your tests.
